@@ -13,6 +13,7 @@ import java.util.List;
 public class UserDaoHibernateImpl implements UserDao {
     private final SessionFactory sessionFactory = Util.getNewSessionFactory();
     private Transaction transaction = null;
+
     public boolean tableExists(SessionFactory sessionFactory) {
         String showTables = "SHOW TABLES";
         String answer = "";
@@ -24,6 +25,7 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
         } catch (RuntimeException e) {
             e.printStackTrace();
+            transaction.rollback();
         }
         return users.equals(answer);
     }
