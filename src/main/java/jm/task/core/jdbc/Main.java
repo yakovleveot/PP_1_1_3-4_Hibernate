@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class Main {
 
-    public static void main(String[] args) throws SQLException  {
+    public static void main(String[] args) throws SQLException {
         // реализуйте алгоритм здесь
         UserDao userDao = new UserDaoHibernateImpl();
 
@@ -25,24 +25,24 @@ public class Main {
         userDao.saveUser("Name4", "LastName4", (byte) 38);
         System.out.println("Юзер с именем " + userDao.getAllUsers().get(3).getName() + " добавлен в базу данных");
         System.out.println("-----------------------------------------------");
-        System.out.println(userDao.getAllUsers().toString().replaceAll(",","\n"));
+        System.out.println(userDao.getAllUsers().toString().replaceAll(",", "\n"));
         System.out.println("-----------------------------------------------");
 
         long id = 3;
         userDao.removeUserById(3);
         System.out.println("Юзер с id: " + id + " удален из базы данных");
-        System.out.println(userDao.getAllUsers().toString().replaceAll(",","\n"));
+        System.out.println(userDao.getAllUsers().toString().replaceAll(",", "\n"));
         System.out.println("-----------------------------------------------");
 
         userDao.getAllUsers();
         userDao.cleanUsersTable();
         System.out.println("Таблица с юзерами очищена");
-        System.out.println(userDao.getAllUsers().toString().replaceAll(",","\n"));
+        System.out.println(userDao.getAllUsers().toString().replaceAll(",", "\n"));
         System.out.println("-----------------------------------------------");
 
         userDao.dropUsersTable();
         System.out.println("Таблица с юзерами удалена");
-        System.out.println(userDao.getAllUsers().toString().replaceAll(",","\n"));
+        System.out.println(userDao.getAllUsers().toString().replaceAll(",", "\n"));
         System.out.println("-----------------------------------------------");
     }
 }

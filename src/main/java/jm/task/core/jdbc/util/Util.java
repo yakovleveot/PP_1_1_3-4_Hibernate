@@ -17,23 +17,25 @@ public class Util {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
     private static final Properties properties = new Properties();
-    public static SessionFactory getNewSessionFactory () {
-        SessionFactory sessionFactory = null;
-            try {
-                properties.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
-                properties.put(Environment.URL, URL);
-                properties.put(Environment.USER, USERNAME);
-                properties.put(Environment.PASS, PASSWORD);
-                properties.put(Environment.SHOW_SQL, "true");
-                properties.put(Environment.HBM2DDL_AUTO, "");
 
-                Configuration configuration = new Configuration();
-                sessionFactory = configuration.setProperties(properties).addAnnotatedClass(User.class).buildSessionFactory();
-            } catch (UnsupportedOperationException | HibernateException e) {
-                e.printStackTrace();
-            }
-            return sessionFactory;
+    public static SessionFactory getNewSessionFactory() {
+        SessionFactory sessionFactory = null;
+        try {
+            properties.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
+            properties.put(Environment.URL, URL);
+            properties.put(Environment.USER, USERNAME);
+            properties.put(Environment.PASS, PASSWORD);
+            properties.put(Environment.SHOW_SQL, "true");
+            properties.put(Environment.HBM2DDL_AUTO, "update");
+
+            Configuration configuration = new Configuration();
+            sessionFactory = configuration.setProperties(properties).addAnnotatedClass(User.class).buildSessionFactory();
+        } catch (UnsupportedOperationException | HibernateException e) {
+            e.printStackTrace();
         }
+        return sessionFactory;
+    }
+
     public static Connection getNewConnection() throws SQLException {
         Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         connection.setAutoCommit(false);

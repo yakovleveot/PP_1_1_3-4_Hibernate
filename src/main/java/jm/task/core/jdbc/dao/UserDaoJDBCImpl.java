@@ -10,14 +10,15 @@ import java.util.Collections;
 import java.util.List;
 
 
-
 public class UserDaoJDBCImpl implements UserDao {
     public UserDaoJDBCImpl() throws SQLException {
     }
+
     Connection connection = Util.getNewConnection();
+
     boolean tableExists(Connection connection) throws SQLException {
         DatabaseMetaData meta = connection.getMetaData();
-        ResultSet resultSet = meta.getTables(null, null, "users", new String[] {"TABLE"});
+        ResultSet resultSet = meta.getTables(null, null, "users", new String[]{"TABLE"});
         return resultSet.next();
     }
 
