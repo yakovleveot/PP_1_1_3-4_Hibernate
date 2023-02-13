@@ -19,6 +19,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.createSQLQuery("CREATE TABLE users (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(45), lastName VARCHAR(45), age INT);").executeUpdate();
+            transaction.commit();
 
         } catch (RuntimeException ignored) {
         }
@@ -29,6 +30,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.createSQLQuery("DROP TABLE users;").executeUpdate();
+            transaction.commit();
 
         } catch (RuntimeException ignored) {
         }
@@ -41,6 +43,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.save(user);
+            transaction.commit();
 
         } catch (RuntimeException e) {
             transaction.rollback();
@@ -66,6 +69,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             TypedQuery<User> users = session.createQuery("from User");
+            transaction.commit();
             return users.getResultList();
 
         } catch (RuntimeException ignored) {
@@ -78,6 +82,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.createSQLQuery("DELETE FROM users;").executeUpdate();
+            transaction.commit();
 
         } catch (RuntimeException e) {
             transaction.rollback();
