@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
 
@@ -66,15 +65,23 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        try (Session session = sessionFactory.openSession()) {
-            transaction = session.beginTransaction();
-            TypedQuery<User> users = session.createQuery("from User");
-            transaction.commit();
-            return users.getResultList();
+        List<User> users = Collections.emptyList();
+        Session session = null;
 
-        } catch (RuntimeException ignored) {
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            users = session.createQuery("from User").getResultList();
+            transaction.commit();
+
+        } catch (RuntimeException e) {
+            System.out.println("RuntimeException: " + e);
+            transaction.rollback();
+
+        } finally {
+            session.close();
         }
-        return Collections.emptyList();
+        return users;
     }
 
     @Override

@@ -5,7 +5,6 @@ import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.model.User;
 
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
 
 public class UserServiceImpl implements UserService, UserDao {
@@ -15,18 +14,12 @@ public class UserServiceImpl implements UserService, UserDao {
     public UserServiceImpl() {
     }
 
-    public void createUsersTable() {
-        try {
+    public void createUsersTable() throws SQLException {
             userDao.createUsersTable();
-        } catch (RuntimeException | SQLException ignored) {
-        }
     }
 
-    public void dropUsersTable() {
-        try {
+    public void dropUsersTable() throws SQLException {
             userDao.dropUsersTable();
-        } catch (RuntimeException | SQLException ignored) {
-        }
     }
 
     public void saveUser(String name, String lastName, byte age) throws SQLException {
@@ -37,12 +30,8 @@ public class UserServiceImpl implements UserService, UserDao {
         userDao.removeUserById(id);
     }
 
-    public List<User> getAllUsers() {
-        try {
+    public List<User> getAllUsers() throws SQLException {
             return userDao.getAllUsers();
-        } catch (RuntimeException | SQLException ignored) {
-        }
-        return Collections.emptyList();
     }
 
     public void cleanUsersTable() throws SQLException {
